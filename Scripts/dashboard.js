@@ -21,6 +21,15 @@ const db = getFirestore(app);
 const date = new Date().toDateString();
 
 
+function fetchLocation(position){
+    console.log(position);
+}
+
+function locationError(){
+    alert('failed to fetch location');
+}
+
+navigator.geolocation.getCurrentPosition(fetchLocation,locationError);
 
 
 function changeGreeting(user_email, id) {
