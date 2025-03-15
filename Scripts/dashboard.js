@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getAuth,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { getFirestore, getDoc ,doc,collection } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"; 
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getFirestore, getDoc, doc, collection, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,35 +18,65 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
+const date = new Date().toDateString();
 
-function changeGreeting(user_email,id){
-    getDoc(doc(db,"user",user_email)).then(docSnap=>{
-        if(docSnap.exists()){
-            const user_data=docSnap.data();
-            let text=user_data.fullName+"";
+
+
+
+function changeGreeting(user_email, id) {
+    getDoc(doc(db, "user", user_email)).then(docSnap => {
+        if (docSnap.exists()) {
+            const user_data = docSnap.data();
+            let text = user_data.fullName + "";
             console.log(text);
-            console.log(typeof(text));
-            let existing_greeting=document.getElementById(id).innerHTML;
-            document.getElementById(id).innerHTML=existing_greeting+", "+text;
+            console.log(typeof (text));
+            let existing_greeting = document.getElementById(id).innerHTML;
+            document.getElementById(id).innerHTML = existing_greeting + ", " + text;
+            document.getElementById('mark').addEventListener('click', () => {
+                markAttendance(text);
+            })
+            
         }
-        else{
+        else {
             console.log("error fetching data");
         }
     })
 }
 
+function markAttendance(full_name) {
+    // alert('attendance marked');
+    const docRef=doc(db,date,full_name);
+
+    let data={
+        fullName:full_name,
+        time: new Date().getTime()
+    }
+
+    console.log(data);
+    getDoc(doc(db,date,full_name)).then(docSnap =>{
+        if(docSnap.exists()){
+            alert("already logged in ");
+        }
+        else{
+            setDoc(docRef,data).then(()=>{
+                alert('data saved in database');
+            })
+        }
+    })
+}
 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const user_email = user.email;
-      console.log(user_email);
-      changeGreeting(user_email,'greeting');
-      // ...
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const user_email = user.email;
+        console.log(user_email);
+        changeGreeting(user_email, 'greeting');
+        
+        // ...
     } else {
         console.log('error occured getting user data');
     }
-  });
+});
 

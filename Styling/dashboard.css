@@ -19,3 +19,22 @@ h1{
     font-size: 30px;
     font-weight: bold;
 }
+
+#container{
+    height: 550px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mark{
+    padding: 7px 25px;
+    border: 0px;
+    border-radius: 15px;
+    background-color: #595cff;
+    font-family:"Poppins", sans-serif;
+    font-weight: bold;
+    color: whitesmoke;
+}
