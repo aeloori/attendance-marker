@@ -28,9 +28,19 @@ let longitudeFlag=false;
 
 
 
+document.getElementById('signout').addEventListener('click',()=>{
+    console.log('signout button clicked');
+    auth.signOut().then(()=>{
+        location.href="../index.html"
+    }).catch(console.error(()=>{
+        console.log('failed to sign out ',error.code);
+    })
+    )
+})
+
 function fetchLocation(position){
 
-    //Precision of location tolerance can be changed by changing to value parameters given to "toFixed" method
+    //Precision of location tolerance can be changed by changing to value parameters given to " toFixed" method
     lat=position.coords.latitude.toFixed(3);
     lon=position.coords.longitude.toFixed(3);
     console.log('lat',lat,'long',lon);
