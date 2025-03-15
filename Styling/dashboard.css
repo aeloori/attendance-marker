@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    
+}
+
+#navbar{
+    height: 50px;
+    width: 90vw;
+    margin-inline: 50px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1{
+    font-size: 30px;
+    font-weight: bold;
+}
