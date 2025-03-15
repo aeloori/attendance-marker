@@ -49,7 +49,7 @@ document.getElementById("register").addEventListener("click", (event) => {
       const docRef = doc(db, "user", email);
       setDoc(docRef, user_data)
         .then(() => {
-          alert("account created");
+          alert("Account created try logging in");
           location.href = "../index.html"
         })
         .catch((error) => {
@@ -60,7 +60,7 @@ document.getElementById("register").addEventListener("click", (event) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      alert(errorMessage);
+      alert('Unknown error',errorMessage);
       // ..
     });
 });

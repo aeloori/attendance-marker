@@ -44,7 +44,7 @@ function fetchLocation(position){
 }
 
 function locationError(){
-    alert('failed to fetch location');
+    alert('Failed to fetch location');
 }
 
 navigator.geolocation.getCurrentPosition(fetchLocation,locationError);
@@ -63,7 +63,7 @@ function changeGreeting(user_email, id) {
                 }
 
                 else{
-                    alert('you are not in a specified location')
+                    alert('Retry getting into a specified location')
                 }
                 
             })
@@ -78,7 +78,6 @@ function changeGreeting(user_email, id) {
 
 
 function markAttendance(full_name) {
-    // alert('attendance marked');
     const docRef=doc(db,date,full_name);
 
     let data={
@@ -91,11 +90,11 @@ function markAttendance(full_name) {
         
 
         if(docSnap.exists() ){
-            alert("already logged in ");
+            alert("Your attendance already marked for today");
         }
         else{
             setDoc(docRef,data).then(()=>{
-                alert('data saved in database');
+                alert('Attendance marked');
             })
         }
     })

@@ -26,7 +26,7 @@ document.getElementById('loginBtn').addEventListener('click', (event) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            alert('login successful');
+            alert('Login successful');
             location.href = '../webpages/dashboard.html'
         })
         .catch((error) => {
@@ -36,7 +36,7 @@ document.getElementById('loginBtn').addEventListener('click', (event) => {
                 alert('Incorrect login credentials or account not found')
             }
             else {
-                alert(errorMessage);
+                alert('Unknown error',errorMessage);
             }
         });
 })
