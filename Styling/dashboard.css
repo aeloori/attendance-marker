@@ -8,8 +8,9 @@
 #navbar{
     height: 50px;
     width: 90vw;
+    padding-block: 10px;
     margin-inline: 50px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,13 +21,20 @@ h1{
     font-weight: bold;
 }
 
+h3{
+    color: whitesmoke;
+}
+
 #container{
-    height: 550px;
-    width: 100vw;
+    height: 90vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,.5)),url(../Media/dashboard_background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #mark{
