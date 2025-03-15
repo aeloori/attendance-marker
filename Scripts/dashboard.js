@@ -2,7 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 import { getFirestore, getDoc, doc, collection, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+
+// not to be disposed
 const firebaseConfig = {
     apiKey: "AIzaSyA2f6DE3rP4zPmVJy6Hejpnfnko4MM9GrE",
     authDomain: "attendance-marker-v1.firebaseapp.com",
@@ -28,9 +29,13 @@ let longitudeFlag=false;
 
 
 function fetchLocation(position){
+
+    //Precision of location tolerance can be changed by changing to value parameters given to "toFixed" method
     lat=position.coords.latitude.toFixed(3);
     lon=position.coords.longitude.toFixed(3);
     console.log('lat',lat,'long',lon);
+
+    //change values according to your desired location where you want to use this site
     if(lat==17.494  && lon==78.442){
         console.log('at desired lat and long')
         latitudeFlag=true;
@@ -104,12 +109,8 @@ function markAttendance(full_name) {
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
         const user_email = user.email;
         changeGreeting(user_email, 'greeting');
-        
-        // ...
     } else {
         console.log('error occured getting user data');
     }
