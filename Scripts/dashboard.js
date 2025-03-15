@@ -20,9 +20,27 @@ const auth = getAuth();
 const db = getFirestore(app);
 const date = new Date().toDateString();
 
+let lat="";
+let lon="";
+let latitudeFlag=false;
+let longitudeFlag=false;
+
+
 
 function fetchLocation(position){
-    console.log(position);
+    lat=position.coords.latitude.toFixed(3);
+    lon=position.coords.longitude.toFixed(3);
+    console.log('lat',lat,'long',lon);
+    if(lat==17.494  && lon==78.442){
+        console.log('at desired lat and long')
+        latitudeFlag=true;
+        longitudeFlag=true;
+    }
+    else{
+        console.log('not in region');
+    }
+    
+    
 }
 
 function locationError(){
@@ -37,12 +55,17 @@ function changeGreeting(user_email, id) {
         if (docSnap.exists()) {
             const user_data = docSnap.data();
             let text = user_data.fullName + "";
-            console.log(text);
-            console.log(typeof (text));
             let existing_greeting = document.getElementById(id).innerHTML;
             document.getElementById(id).innerHTML = existing_greeting + ", " + text;
             document.getElementById('mark').addEventListener('click', () => {
-                markAttendance(text);
+                if(longitudeFlag && latitudeFlag){
+                    markAttendance(text);
+                }
+
+                else{
+                    alert('you are not in a specified location')
+                }
+                
             })
             
         }
@@ -51,6 +74,8 @@ function changeGreeting(user_email, id) {
         }
     })
 }
+
+
 
 function markAttendance(full_name) {
     // alert('attendance marked');
@@ -61,9 +86,11 @@ function markAttendance(full_name) {
         time: new Date().getTime()
     }
 
-    console.log(data);
     getDoc(doc(db,date,full_name)).then(docSnap =>{
-        if(docSnap.exists()){
+
+        
+
+        if(docSnap.exists() ){
             alert("already logged in ");
         }
         else{
@@ -75,12 +102,12 @@ function markAttendance(full_name) {
 }
 
 
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const user_email = user.email;
-        console.log(user_email);
         changeGreeting(user_email, 'greeting');
         
         // ...
