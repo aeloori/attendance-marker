@@ -39,28 +39,28 @@ document.getElementById("register").addEventListener("click", (event) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    const user_data = {
+    .then((userCredential) => {
+      // Signed up 
+      const user = userCredential.user;
+      const user_data = {
         fullName: full_name,
-        user_email:email
+        user_email: email
       };
       const docRef = doc(db, "user", email);
       setDoc(docRef, user_data)
         .then(() => {
           alert("account created");
-          location.href="../index.html"
+          location.href = "../index.html"
         })
         .catch((error) => {
           console.log(error.code);
         });
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(errorMessage);
-    // ..
-  });
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+      // ..
+    });
 });
